@@ -51,10 +51,15 @@
   :group 'dogecoind-api
   :type '(string))
 
-(defcustom dogecoind-api-poit nil
+(defcustom dogecoind-api-port 8334
   "Your dogecoind server port."
   :group 'dogecoind-api
   :type '(integer))
+
+(defcustom dogecoind-api-address "127.0.0.1"
+  "Your dogecoind server IP address."
+  :group 'dogecoind-api
+  :type '(string))
 
 
 ;; Main API methods
