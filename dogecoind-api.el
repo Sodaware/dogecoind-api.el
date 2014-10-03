@@ -87,7 +87,7 @@
 
 (defun dogecoind-api--build-request (action &optional params)
   "Use ACTION, and optionally PARAMS, to build the JSON payload for an RPC request."
-  (json-encode (append `((:action . ,action)) params)))
+  (json-encode (append `((:method . ,action)) params)))
 
 (defun dogecoind-api--build-endpoint ()
   "Create the address endpoint to connect to the server."

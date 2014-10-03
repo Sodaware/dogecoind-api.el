@@ -20,11 +20,11 @@
 
 (ert-deftest dogecoind-api-test/can-build-request-without-params ()
   (should (string=
-           "{\"action\":\"getinfo\"}"
+           "{\"method\":\"getinfo\"}"
            (dogecoind-api--build-request "getinfo"))))
 
 (ert-deftest dogecoind-api-test/can-build-request-with-params ()
-  (let ((expected "{\"action\":\"getinfo\", \"arg\":\"value\"}"))
+  (let ((expected "{\"method\":\"getinfo\", \"arg\":\"value\"}"))
     (should (string= expected (dogecoind-api--build-request "getinfo" `((:arg . ,"value")))))
     (should (string= expected (dogecoind-api--build-request "getinfo" `((:arg . ,:value)))))))
 
