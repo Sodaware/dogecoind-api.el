@@ -68,6 +68,21 @@
   "Get an object containing various state info."
   (dogecoind-api--get-request "getinfo"))
 
+(defun dogecoind-api-get-block-count ()
+  "Get the number of blocks in the longest block chain."
+  (assoc-default 'result (dogecoind-api--get-request "getblockcount")))
+
+(defun dogecoind-api-get-difficulty ()
+  "Get the proof-of-work difficulty as a multiple of the minimum difficulty."
+  (assoc-default 'result (dogecoind-api--get-request "getdifficulty")))
+
+(defun dogecoind-api-get-balance (&optional account)
+  "Get the balance for all accounts, or just ACCOUNT if specified."
+  (let ((params `((:account . ,account))))
+    (when (null account)
+      (setq params nil))
+    (assoc-default 'result (dogecoind-api--get-request "getbalance" params))))
+
 
 ;; Request helpers
 
