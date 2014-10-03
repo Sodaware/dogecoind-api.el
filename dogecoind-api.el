@@ -78,14 +78,14 @@
 ;; Request helpers
 
 (defun dogecoind-api--get-request (action &optional params)
-  "Request the server to perform ACTION with optional PARAMS."
+  "Perform ACTION on the server with optional PARAMS."
   (let* ((http-auth-token (dogecoind-api--create-auth dogecoind-api-username dogecoind-api-password))
          (url-request-method "GET")
          (url-request-extra-headers
           `(("Authorization" . ,(concat "Basic " http-auth-token))))
-         (url-request-data "{ \"method\": \"getinfo\" }"))
+         (url-request-data (dogecoind-api--build-request action params)))
 
-    (with-current-buffer (url-retrieve-synchronously "http://127.0.0.1:8334/")
+    (with-current-buffer (url-retrieve-synchronously (dogecoind-api--build-endpoint))
       (goto-char (point-min))
       (goto-char url-http-end-of-headers)
       (prog1 (json-read)
@@ -94,6 +94,12 @@
 (defun dogecoind-api--build-request (action &optional params)
   "Use ACTION, and optionally PARAMS, to build the JSON payload for an RPC request."
   (json-encode (append `((:action . ,action)) params)))
+
+(defun dogecoind-api--build-endpoint ()
+  "Create the address endpoint to connect to the server."
+  (format "http://%s:%s/" dogecoind-api-address dogecoind-api-port)
+
+  )
 
 (defun dogecoind-api--create-auth (username password)
   "Use USERNAME and PASSWORD to create a HTTP authorization token."
