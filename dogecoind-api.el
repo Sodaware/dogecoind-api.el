@@ -66,13 +66,7 @@
 
 (defun dogecoind-api-get-info ()
   "Get an object containing various state info."
-  
-
-  (message (format "%s" (dogecoind-api--get-request "getinfo")))
-  
-  ;; Connect
-  
-  )
+  (dogecoind-api--get-request "getinfo"))
 
 
 ;; Request helpers
