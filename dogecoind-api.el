@@ -88,7 +88,7 @@
 
 (defun dogecoind-api--build-request (action &optional params)
   "Use ACTION, and optionally PARAMS, to build the JSON payload for an RPC request."
-  (json-encode `((:action . ,action))))
+  (json-encode (append `((:action . ,action)) params)))
 
 (defun dogecoind-api--create-auth (username password)
   "Use USERNAME and PASSWORD to create a HTTP authorization token."
