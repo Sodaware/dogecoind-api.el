@@ -91,9 +91,7 @@
 
 (defun dogecoind-api--build-endpoint ()
   "Create the address endpoint to connect to the server."
-  (format "http://%s:%s/" dogecoind-api-address dogecoind-api-port)
-
-  )
+  (format "http://%s:%s/" dogecoind-api-address dogecoind-api-port))
 
 (defun dogecoind-api--create-auth (username password)
   "Use USERNAME and PASSWORD to create a HTTP authorization token."
