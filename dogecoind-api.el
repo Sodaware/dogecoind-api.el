@@ -104,10 +104,19 @@ If GET-ONLY is true, the address will only be retrieved if the account exists."
 
 
 ;; Account helpers
+
 (defun dogecoind-api-account-exists-p (account)
   "Check if named ACCOUNT exists."
   (let ((accounts (dogecoind-api-list-accounts)))
     (not (null (assoc-default account accounts)))))
+
+
+;; Server Helpers
+
+(defun dogecoind-api-server-running-p ()
+  "Check if the dogecoind server is running."
+  (url-http-file-exists-p (dogecoind-api--build-endpoint)))
+
 
 ;; Request helpers
 

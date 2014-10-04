@@ -50,6 +50,18 @@
    (mock (dogecoind-api--get-request "listaccounts") => (read-fixture "listaccounts.json"))
    (should (null (dogecoind-api-account-exists-p "Invalid Account")))))
 
+
+;; SERVER HELPERS
+
+(ert-deftest dogecoind-api-test/can-test-if-server-running ()
+  (with-mock
+   (mock (url-http-file-exists-p "http://127.0.0.1:8334/") => t)
+   (should (dogecoind-api-server-running-p)))
+  (with-mock
+   (mock (url-http-file-exists-p "http://127.0.0.1:8334/") => nil)
+   (should (null (dogecoind-api-server-running-p)))))
+
+
 ;; INTERNAL TESTS
 
 (ert-deftest dogecoind-api-test/can-encode-auth ()
