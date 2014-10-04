@@ -83,19 +83,15 @@
       (setq params nil))
     (assoc-default 'result (dogecoind-api--get-request "getbalance" params))))
 
-(defun dogecoind-api-get-account-address (account &optional get-only)
+(defun dogecoind-api-get-account-address (account &optional no-create)
   "Get the Dogecoin address for ACCOUNT, or create if ACCOUNT does not exist.
 
-If GET-ONLY is true, the address will only be retrieved if the account exists."
-  
-  ;; If GET-ONLY is true, check the account exists and return nil if not found
-  ;; Otherwise return the address
-  
-  (when (and (get-only ))
-    (dogecoind-api--get-request "getaccountaddress" `((:account . ,account))))
-
-  
-  )
+If NO-CREATE is true, the address will only be retrieved if the account exists."
+  (if no-create
+      (if (dogecoind-api-account-exists-p account)
+          (dogecoind-api--get-request-result "getaccountaddress" `((:account . ,account)))
+        nil)
+    (dogecoind-api--get-request-result "getaccountaddress" `((:account . ,account)))))
 
 (defun dogecoind-api-list-accounts ()
   "Get a list of account names and their balances."
@@ -133,6 +129,10 @@ If GET-ONLY is true, the address will only be retrieved if the account exists."
       (goto-char url-http-end-of-headers)
       (prog1 (json-read)
         (kill-buffer)))))
+
+(defun dogecoind-api--get-request-result (action &optional params)
+  "Perform ACTION on the server with optional PARAMS and return the 'result key."
+  (assoc-default 'result (dogecoind-api--get-request action params)))
 
 (defun dogecoind-api--build-request (action &optional params)
   "Use ACTION, and optionally PARAMS, to build the JSON payload for an RPC request."

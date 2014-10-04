@@ -36,6 +36,17 @@
      (should (= 3 (length accounts)))
      (should (= 100 (assoc-default "Account One" accounts))))))
 
+(ert-deftest dogecoind-api/can-get-account-address ()
+  (with-mock
+   (mock (dogecoind-api--get-request "getaccountaddress" `((:account . ,"testaccount"))) => (read-fixture "getaccountaddress-testaccount.json"))
+   (should (equal "abc123" (dogecoind-api-get-account-address "testaccount")))))
+
+(ert-deftest dogecoind-api/get-account-address-does-not-create-account-if-no-create-set ()
+  (with-mock
+   (mock (dogecoind-api-account-exists-p "not-found") => nil)
+   (not-called dogecoind-api--get-request-result)
+   (should (null (dogecoind-api-get-account-address "not-found" t)))))
+
 
 ;; Account helper tests
 
@@ -92,4 +103,9 @@
    (mock (url-retrieve-synchronously "http://127.0.0.1:8334/") => (read-fixture-file-as-response "getinfo.json"))
    (let* ((response (dogecoind-api--get-request "getinfo")))
      (should (eq 1080000 (assoc-default 'version response))))))
+
+(ert-deftest dogecoind-api-test/can-get-request-result-returns-single-value ()
+  (with-mock
+   (mock (dogecoind-api--get-request "getbalance") => (read-fixture "getbalance.json"))
+   (should (= 123.123465 (dogecoind-api--get-request-result "getbalance")))))
 
