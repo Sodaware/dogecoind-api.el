@@ -57,6 +57,17 @@
    (mock (dogecoind-api--get-request "getconnectioncount") => (read-fixture "getconnectioncount.json"))
    (should (= 4 (dogecoind-api-get-connection-count)))))
 
+(ert-deftest dogecoind-api/can-get-received-by-account-with-no-parameters ()
+  (with-mock
+   (mock (dogecoind-api--get-request "getreceivedbyaccount") => (read-fixture "getreceivedbyaccount.json"))
+   (should (= 100 (dogecoind-api-get-received-by-account)))))
+
+(ert-deftest dogecoind-api/can-get-received-by-account-with-account-name ()
+  (with-mock
+   (mock (dogecoind-api--get-request "getreceivedbyaccount" `(,"testaccount" ,nil)) => (read-fixture "getreceivedbyaccount-testaccount.json"))
+   (should (= 200 (dogecoind-api-get-received-by-account "testaccount")))))
+
+
 ;; Account helper tests
 
 (ert-deftest dogecoind-api-test/account-exists-returns-t-for-valid-accounts ()

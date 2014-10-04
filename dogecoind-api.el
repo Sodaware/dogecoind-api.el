@@ -104,6 +104,13 @@ If NO-CREATE is true, the address will only be retrieved if the account exists."
   (let ((json-key-type 'string))
     (dogecoind-api--get-request "listaccounts")))
 
+(defun dogecoind-api-get-received-by-account (&optional account min-confirmations)
+  "Fetch the amount of DOGE received by ACCOUNT.
+
+Can optionally specify MIN-CONFIRMATIONS, which will only include transactions
+with at least that many confirmations."
+  (dogecoind-api--get-request-result "getreceivedbyaccount" `(,account ,min-confirmations)))
+
 
 ;; Account helpers
 
