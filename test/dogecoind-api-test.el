@@ -26,7 +26,7 @@
 
 (ert-deftest dogecoind-api-test/can-get-balance-with-account ()
   (with-mock
-   (mock (dogecoind-api--get-request "getbalance" `((:account . ,"testaccount"))) => (read-fixture "getbalance-testaccount.json"))
+   (mock (dogecoind-api--get-request "getbalance" '("testaccount")) => (read-fixture "getbalance-testaccount.json"))
    (should (= 321.123465 (dogecoind-api-get-balance "testaccount")))))
 
 (ert-deftest dogecoind-api-test/can-list-accounts ()
@@ -38,7 +38,7 @@
 
 (ert-deftest dogecoind-api/can-get-account-address ()
   (with-mock
-   (mock (dogecoind-api--get-request "getaccountaddress" `((:account . ,"testaccount"))) => (read-fixture "getaccountaddress-testaccount.json"))
+   (mock (dogecoind-api--get-request "getaccountaddress" `(,"testaccount")) => (read-fixture "getaccountaddress-testaccount.json"))
    (should (equal "abc123" (dogecoind-api-get-account-address "testaccount")))))
 
 (ert-deftest dogecoind-api/get-account-address-does-not-create-account-if-no-create-set ()
@@ -47,6 +47,10 @@
    (not-called dogecoind-api--get-request-result)
    (should (null (dogecoind-api-get-account-address "not-found" t)))))
 
+(ert-deftest dogecoind-api/can-get-address-account ()
+  (with-mock
+   (mock (dogecoind-api--get-request "getaccount" `(,"abc123")) => (read-fixture "getaccount-abc123.json"))
+   (should (equal "testaccount" (dogecoind-api-get-account "abc123")))))
 
 ;; Account helper tests
 
@@ -86,9 +90,9 @@
            (dogecoind-api--build-request "getinfo"))))
 
 (ert-deftest dogecoind-api-test/can-build-request-with-params ()
-  (let ((expected "{\"method\":\"getinfo\", \"arg\":\"value\"}"))
-    (should (string= expected (dogecoind-api--build-request "getinfo" `((:arg . ,"value")))))
-    (should (string= expected (dogecoind-api--build-request "getinfo" `((:arg . ,:value)))))))
+  (let ((expected "{\"method\":\"getinfo\", \"params\":[\"value\"]}"))
+    (should (string= expected (dogecoind-api--build-request "getinfo" '("value"))))
+    (should (string= expected (dogecoind-api--build-request "getinfo" '(:value))))))
 
 (ert-deftest dogecoind-api-test/can-build-endpoint-with-custom-settings ()
   (let ((dogecoind-api-address "192.168.1.5")

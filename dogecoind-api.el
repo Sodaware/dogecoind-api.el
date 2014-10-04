@@ -78,10 +78,12 @@
 
 (defun dogecoind-api-get-balance (&optional account)
   "Get the balance for all accounts, or just ACCOUNT if specified."
-  (let ((params `((:account . ,account))))
-    (when (null account)
-      (setq params nil))
+  (let ((params (unless (null account) `(,account))))
     (assoc-default 'result (dogecoind-api--get-request "getbalance" params))))
+
+(defun dogecoind-api-get-account (address)
+  "Get the account associated with ADDRESS."
+  (dogecoind-api--get-request-result "getaccount" `(,address)))
 
 (defun dogecoind-api-get-account-address (account &optional no-create)
   "Get the Dogecoin address for ACCOUNT, or create if ACCOUNT does not exist.
@@ -89,9 +91,9 @@
 If NO-CREATE is true, the address will only be retrieved if the account exists."
   (if no-create
       (if (dogecoind-api-account-exists-p account)
-          (dogecoind-api--get-request-result "getaccountaddress" `((:account . ,account)))
+          (dogecoind-api--get-request-result "getaccountaddress" `(,account))
         nil)
-    (dogecoind-api--get-request-result "getaccountaddress" `((:account . ,account)))))
+    (dogecoind-api--get-request-result "getaccountaddress" `(,account))))
 
 (defun dogecoind-api-list-accounts ()
   "Get a list of account names and their balances."
@@ -123,7 +125,6 @@ If NO-CREATE is true, the address will only be retrieved if the account exists."
          (url-request-extra-headers
           `(("Authorization" . ,(concat "Basic " http-auth-token))))
          (url-request-data (dogecoind-api--build-request action params)))
-
     (with-current-buffer (url-retrieve-synchronously (dogecoind-api--build-endpoint))
       (goto-char (point-min))
       (goto-char url-http-end-of-headers)
@@ -136,7 +137,10 @@ If NO-CREATE is true, the address will only be retrieved if the account exists."
 
 (defun dogecoind-api--build-request (action &optional params)
   "Use ACTION, and optionally PARAMS, to build the JSON payload for an RPC request."
-  (json-encode (append `((:method . ,action)) params)))
+  (let ((request (append `((:method . ,action)) `((:params . ,params)))))
+    (when (null params)
+      (setq request (delq (assoc :params request) request)))
+    (json-encode request)))
 
 (defun dogecoind-api--build-endpoint ()
   "Create the address endpoint to connect to the server."
