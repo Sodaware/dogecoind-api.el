@@ -83,6 +83,20 @@
       (setq params nil))
     (assoc-default 'result (dogecoind-api--get-request "getbalance" params))))
 
+(defun dogecoind-api-get-account-address (account &optional get-only)
+  "Get the Dogecoin address for ACCOUNT, or create if ACCOUNT does not exist.
+
+If GET-ONLY is true, the address will only be retrieved if the account exists."
+  
+  ;; If GET-ONLY is true, check the account exists and return nil if not found
+  ;; Otherwise return the address
+  
+  (when (and (get-only ))
+    (dogecoind-api--get-request "getaccountaddress" `((:account . ,account))))
+
+  
+  )
+
 (defun dogecoind-api-list-accounts ()
   "Get a list of account names and their balances."
   (let ((json-key-type 'string))
@@ -93,7 +107,7 @@
 (defun dogecoind-api-account-exists-p (account)
   "Check if named ACCOUNT exists."
   (let ((accounts (dogecoind-api-list-accounts)))
-    (assoc-default account accounts)))
+    (not (null (assoc-default account accounts)))))
 
 ;; Request helpers
 

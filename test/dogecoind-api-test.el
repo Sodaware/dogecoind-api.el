@@ -42,7 +42,8 @@
 (ert-deftest dogecoind-api-test/account-exists-returns-t-for-valid-accounts ()
   (with-mock
    (mock (dogecoind-api--get-request "listaccounts") => (read-fixture "listaccounts.json"))
-   (should (dogecoind-api-account-exists-p "Account One"))))
+   (should (dogecoind-api-account-exists-p "Account One"))
+   (should (booleanp (dogecoind-api-account-exists-p "Account One")))))
 
 (ert-deftest dogecoind-api-test/account-exists-returns-nil-for-invalid-accounts ()
   (with-mock
