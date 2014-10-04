@@ -29,6 +29,12 @@
    (mock (dogecoind-api--get-request "getbalance" `((:account . ,"testaccount"))) => (read-fixture "getbalance-testaccount.json"))
    (should (= 321.123465 (dogecoind-api-get-balance "testaccount")))))
 
+(ert-deftest dogecoind-api-test/can-list-accounts ()
+  (with-mock
+   (mock (dogecoind-api--get-request "listaccounts") => (read-fixture "listaccounts.json"))
+   (let ((accounts (dogecoind-api-list-accounts)))
+     (should (= 3 (length accounts)))
+     (should (= 100 (assoc-default "Account One" accounts))))))
 
 
 ;; INTERNAL TESTS

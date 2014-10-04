@@ -83,6 +83,11 @@
       (setq params nil))
     (assoc-default 'result (dogecoind-api--get-request "getbalance" params))))
 
+(defun dogecoind-api-list-accounts ()
+  "Get a list of account names and their balances."
+  (let ((json-key-type 'string))
+    (dogecoind-api--get-request "listaccounts")))
+
 
 ;; Request helpers
 
