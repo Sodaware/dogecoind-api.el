@@ -52,6 +52,11 @@
    (mock (dogecoind-api--get-request "getaccount" `(,"abc123")) => (read-fixture "getaccount-abc123.json"))
    (should (equal "testaccount" (dogecoind-api-get-account "abc123")))))
 
+(ert-deftest dogecoind-api/can-get-connection-count ()
+  (with-mock
+   (mock (dogecoind-api--get-request "getconnectioncount") => (read-fixture "getconnectioncount.json"))
+   (should (= 4 (dogecoind-api-get-connection-count)))))
+
 ;; Account helper tests
 
 (ert-deftest dogecoind-api-test/account-exists-returns-t-for-valid-accounts ()

@@ -76,6 +76,10 @@
   "Get the proof-of-work difficulty as a multiple of the minimum difficulty."
   (assoc-default 'result (dogecoind-api--get-request "getdifficulty")))
 
+(defun dogecoind-api-get-connection-count ()
+  "Get the number of connections to other nodes."
+  (dogecoind-api--get-request-result "getconnectioncount"))
+
 (defun dogecoind-api-get-balance (&optional account)
   "Get the balance for all accounts, or just ACCOUNT if specified."
   (let ((params (unless (null account) `(,account))))
