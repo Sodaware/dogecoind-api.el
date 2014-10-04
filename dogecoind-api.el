@@ -89,6 +89,12 @@
     (dogecoind-api--get-request "listaccounts")))
 
 
+;; Account helpers
+(defun dogecoind-api-account-exists-p (account)
+  "Check if named ACCOUNT exists."
+  (let ((accounts (dogecoind-api-list-accounts)))
+    (assoc-default account accounts)))
+
 ;; Request helpers
 
 (defun dogecoind-api--get-request (action &optional params)
