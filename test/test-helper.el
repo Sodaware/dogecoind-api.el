@@ -37,4 +37,12 @@
         (insert (concat "HTTP/1.0 200 OK\n\n" file-contents))
         (set (make-local-variable 'url-http-end-of-headers) 18)
         (current-buffer))))
-      
+
+
+;; Mock Helpers
+
+(defmacro mock-request (action &optional args fixture)
+  (let ((fixture (if (null fixture) (concat action ".json") fixture)))
+    (if (null args)
+        `(mock (dogecoind-api--get-request ,action) => (read-fixture ,fixture))
+      `(mock (dogecoind-api--get-request ,action ,args) => (read-fixture ,fixture)))))

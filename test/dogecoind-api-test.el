@@ -3,7 +3,7 @@
 
 (ert-deftest dogecoind-api-test/can-get-info ()
   (with-mock
-   (mock (dogecoind-api--get-request "getinfo") => (read-fixture "getinfo.json"))
+   (mock-request "getinfo")
    (let ((response (dogecoind-api-get-info)))
      (should (eq 1080000 (assoc-default 'version response)))
      (should (eq 70003 (assoc-default 'protocolversion response)))
@@ -11,27 +11,27 @@
 
 (ert-deftest dogecoind-api-test/can-get-block-count ()
   (with-mock
-   (mock (dogecoind-api--get-request "getblockcount") => (read-fixture "getblockcount.json"))
+   (mock-request "getblockcount")
    (should (= 123456 (dogecoind-api-get-block-count)))))
 
 (ert-deftest dogecoind-api-test/can-get-difficulty ()
   (with-mock
-   (mock (dogecoind-api--get-request "getdifficulty") => (read-fixture "getdifficulty.json"))
+   (mock-request "getdifficulty")
    (should (= 654321.123456 (dogecoind-api-get-difficulty)))))
 
 (ert-deftest dogecoind-api-test/can-get-balance-without-account ()
   (with-mock
-   (mock (dogecoind-api--get-request "getbalance") => (read-fixture "getbalance.json"))
+   (mock-request "getbalance")
    (should (= 123.123465 (dogecoind-api-get-balance)))))
 
 (ert-deftest dogecoind-api-test/can-get-balance-with-account ()
   (with-mock
-   (mock (dogecoind-api--get-request "getbalance" '("testaccount")) => (read-fixture "getbalance-testaccount.json"))
+   (mock-request "getbalance" '("testaccount") "getbalance-testaccount.json")
    (should (= 321.123465 (dogecoind-api-get-balance "testaccount")))))
 
 (ert-deftest dogecoind-api-test/can-list-accounts ()
   (with-mock
-   (mock (dogecoind-api--get-request "listaccounts") => (read-fixture "listaccounts.json"))
+   (mock-request "listaccounts")
    (let ((accounts (dogecoind-api-list-accounts)))
      (should (= 3 (length accounts)))
      (should (= 100 (assoc-default "Account One" accounts))))))
@@ -54,12 +54,12 @@
 
 (ert-deftest dogecoind-api/can-get-connection-count ()
   (with-mock
-   (mock (dogecoind-api--get-request "getconnectioncount") => (read-fixture "getconnectioncount.json"))
+   (mock-request "getconnectioncount")
    (should (= 4 (dogecoind-api-get-connection-count)))))
 
 (ert-deftest dogecoind-api/can-get-received-by-account-with-no-parameters ()
   (with-mock
-   (mock (dogecoind-api--get-request "getreceivedbyaccount") => (read-fixture "getreceivedbyaccount.json"))
+   (mock-request "getreceivedbyaccount")
    (should (= 100 (dogecoind-api-get-received-by-account)))))
 
 (ert-deftest dogecoind-api/can-get-received-by-account-with-account-name ()
@@ -77,9 +77,10 @@
 
 (ert-deftest dogecoind-api/can-get-transaction-with-valid-id ()
   (with-mock
-   (mock (dogecoind-api--get-request "gettransaction" `(,"valid_transaction")) => (read-fixture "gettransaction-valid_transaction.json"))
+   (mock-request "gettransaction" `(,"valid_transaction") "gettransaction-valid_transaction.json")
    (let* ((transaction (dogecoind-api-get-transaction "valid_transaction")))
      (should (= 100 (assoc-default 'amount transaction))))))
+
 
 
 ;; Account helper tests
