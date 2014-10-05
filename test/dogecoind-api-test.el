@@ -81,6 +81,11 @@
    (let* ((transaction (dogecoind-api-get-transaction "valid_transaction")))
      (should (= 100 (assoc-default 'amount transaction))))))
 
+(ert-deftest dogecoind-api/get-transaction-returns-nil-if-invalid-id ()
+  (with-mock
+   (mock-request "gettransaction" `(,"invalid_transaction") "gettransaction-invalid_transaction.json")
+   (let* ((transaction (dogecoind-api-get-transaction "invalid_transaction")))
+     (should (null transaction)))))
 
 
 ;; Account helper tests

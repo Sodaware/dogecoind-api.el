@@ -1,21 +1,25 @@
 {
-    "amount" : 100.00000000,
-    "confirmations" : 20,
-    "blockhash" : "valid_block_hash",
-    "blockindex" : 5,
-    "blocktime" : 1412476600,
-    "txid" : "valid_transaction",
-    "walletconflicts" : [
-    ],
-    "time" : 1412476600,
-    "timereceived" : 1412476650,
-    "details" : [
-        {
-            "account" : "Account One",
-            "address" : "valid_address",
-            "category" : "receive",
-            "amount" : 100.00000000
-        }
-    ],
-    "hex" : "a_whole_bunch_of_hex"
+    "id" : "",
+    "error" : "",
+    "result" : {
+        "amount" : 100.00000000,
+        "confirmations" : 20,
+        "blockhash" : "valid_block_hash",
+        "blockindex" : 5,
+        "blocktime" : 1412476600,
+        "txid" : "valid_transaction",
+        "walletconflicts" : [
+        ],
+        "time" : 1412476600,
+        "timereceived" : 1412476650,
+        "details" : [
+            {
+                "account" : "Account One",
+                "address" : "valid_address",
+                "category" : "receive",
+                "amount" : 100.00000000
+            }
+        ],
+        "hex" : "a_whole_bunch_of_hex"
+    }
 }
