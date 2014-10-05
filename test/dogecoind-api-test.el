@@ -75,6 +75,12 @@
      (should (= 1 (length response)))
      (should (equal "Account One" (assoc-default 'account transaction))))))
 
+(ert-deftest dogecoind-api/can-get-transaction-with-valid-id ()
+  (with-mock
+   (mock (dogecoind-api--get-request "gettransaction" `(,"valid_transaction")) => (read-fixture "gettransaction-valid_transaction.json"))
+   (let* ((transaction (dogecoind-api-get-transaction "valid_transaction")))
+     (should (= 100 (assoc-default 'amount transaction))))))
+
 
 ;; Account helper tests
 

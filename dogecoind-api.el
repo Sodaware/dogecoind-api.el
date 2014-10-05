@@ -123,6 +123,10 @@ If no account is specified, transactions from all accounts will be listed."
         (from (when (null from) 0)))
     (dogecoind-api--get-request "listtransactions" `(,account ,count ,from))))
 
+(defun dogecoind-api-get-transaction (transaction-id)
+  "Fetch the transaction with id TRANSACTION-ID."
+  (dogecoind-api--get-request "gettransaction" `(,transaction-id)))
+
 
 ;; Account helpers
 
