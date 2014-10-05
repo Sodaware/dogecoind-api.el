@@ -67,6 +67,14 @@
    (mock (dogecoind-api--get-request "getreceivedbyaccount" `(,"testaccount" ,nil)) => (read-fixture "getreceivedbyaccount-testaccount.json"))
    (should (= 200 (dogecoind-api-get-received-by-account "testaccount")))))
 
+(ert-deftest dogecoind-api/can-get-transactions-for-all-accounts ()
+  (with-mock
+   (mock (dogecoind-api--get-request "listtransactions" `(,"*" 10 0)) => (read-fixture "listtransactions.json"))
+   (let* ((response (dogecoind-api-list-transactions))
+          (transaction (elt response 0)))
+     (should (= 1 (length response)))
+     (should (equal "Account One" (assoc-default 'account transaction))))))
+
 
 ;; Account helper tests
 
@@ -128,4 +136,3 @@
   (with-mock
    (mock (dogecoind-api--get-request "getbalance") => (read-fixture "getbalance.json"))
    (should (= 123.123465 (dogecoind-api--get-request-result "getbalance")))))
-

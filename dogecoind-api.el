@@ -112,6 +112,18 @@ with at least that many confirmations."
   (dogecoind-api--get-request-result "getreceivedbyaccount" `(,account ,min-confirmations)))
 
 
+(defun dogecoind-api-list-transactions (&optional account count from)
+  "List transactions for ACCOUNT, up to COUNT and skipping the first FROM.
+
+If no account is specified, transactions from all accounts will be listed."
+
+  ;; Set defaults - "*" will list transactions from all accounts
+  (let ((account (when (null account) "*"))
+        (count (when (null count) 10))
+        (from (when (null from) 0)))
+    (dogecoind-api--get-request "listtransactions" `(,account ,count ,from))))
+
+
 ;; Account helpers
 
 (defun dogecoind-api-account-exists-p (account)
