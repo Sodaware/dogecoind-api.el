@@ -68,6 +68,10 @@
   "Get an object containing various state info."
   (dogecoind-api--get-request "getinfo"))
 
+(defun dogecoind-api-get-mining-info ()
+  "Get an object containing mining-related information."
+  (dogecoind-api--get-request "getmininginfo"))
+
 (defun dogecoind-api-get-block-count ()
   "Get the number of blocks in the longest block chain."
   (assoc-default 'result (dogecoind-api--get-request "getblockcount")))
