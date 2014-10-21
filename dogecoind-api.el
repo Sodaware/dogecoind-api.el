@@ -70,7 +70,7 @@
 
 (defun dogecoind-api-get-peer-info ()
   "Get data about each connected node."
-  (dogecoind-api--get-request "getpeerinfo"))
+  (dogecoind-api--get-request-result "getpeerinfo"))
 
 (defun dogecoind-api-get-mining-info ()
   "Get an object containing mining-related information."
