@@ -74,7 +74,7 @@
 
 (defun dogecoind-api-get-mining-info ()
   "Get an object containing mining-related information."
-  (dogecoind-api--get-request "getmininginfo"))
+  (dogecoind-api--get-request-result "getmininginfo"))
 
 (defun dogecoind-api-get-block-count ()
   "Get the number of blocks in the longest block chain."

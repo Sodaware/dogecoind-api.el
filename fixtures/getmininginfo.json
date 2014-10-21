@@ -1,0 +1,17 @@
+{
+    "id" : "",
+    "error" : "",
+    "result" : {
+        "blocks" : 425322,
+        "currentblocksize" : 0,
+        "currentblocktx" : 0,
+        "difficulty" : 11795.06534808,
+        "errors" : "",
+        "genproclimit" : -1,
+        "networkhashps" : 959220014071,
+        "pooledtx" : 24,
+        "testnet" : false,
+        "generate" : false,
+        "hashespersec" : 0
+    }
+}

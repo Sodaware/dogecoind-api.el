@@ -15,6 +15,12 @@
    (let ((peers (dogecoind-api-get-peer-info)))
      (should (= 2 (length peers))))))
 
+(ert-deftest dogecoind-api-test/can-get-mining-info ()
+  (with-mock
+   (mock-request "getmininginfo")
+   (let ((info (dogecoind-api-get-mining-info)))
+     (should (= 425322 (assoc-default 'blocks info))))))
+
 (ert-deftest dogecoind-api-test/can-get-block-count ()
   (with-mock
    (mock-request "getblockcount")
