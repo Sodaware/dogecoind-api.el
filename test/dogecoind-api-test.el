@@ -154,7 +154,7 @@
   (with-mock
    (mock (url-retrieve-synchronously "http://127.0.0.1:8334/") => (read-fixture-file-as-response "getinfo.json"))
    (let* ((response (dogecoind-api--get-request "getinfo")))
-     (should (eq 1080000 (assoc-default 'version response))))))
+     (should (eq 1080000 (assoc-default 'version (assoc-default 'result response)))))))
 
 (ert-deftest dogecoind-api-test/can-get-request-result-returns-single-value ()
   (with-mock

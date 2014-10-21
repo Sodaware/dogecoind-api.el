@@ -66,7 +66,7 @@
 
 (defun dogecoind-api-get-info ()
   "Get an object containing various state info."
-  (dogecoind-api--get-request "getinfo"))
+  (dogecoind-api--get-request-result "getinfo"))
 
 (defun dogecoind-api-get-peer-info ()
   "Get data about each connected node."
