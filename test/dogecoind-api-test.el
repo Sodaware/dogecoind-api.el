@@ -9,6 +9,12 @@
      (should (eq 70003 (assoc-default 'protocolversion response)))
      (should (eq :json-false (assoc-default 'testnet response))))))
 
+(ert-deftest dogecoind-api-test/can-get-peer-info ()
+  (with-mock
+   (mock-request "getpeerinfo")
+   (let ((peers (dogecoind-api-get-peer-info)))
+     (should (= 2 (length peers))))))
+
 (ert-deftest dogecoind-api-test/can-get-block-count ()
   (with-mock
    (mock-request "getblockcount")

@@ -1,0 +1,35 @@
+[
+    {
+        "addr" : "192.168.1.1:22556",
+        "addrlocal" : "192.168.255.1:22556",
+        "services" : "00000003",
+        "lastsend" : 1413854162,
+        "lastrecv" : 1413854162,
+        "bytessent" : 1435,
+        "bytesrecv" : 5087,
+        "conntime" : 1413854158,
+        "pingtime" : 0.00000000,
+        "version" : 70003,
+        "subver" : "/Shibetoshi:1.8.0/",
+        "inbound" : false,
+        "startingheight" : 425318,
+        "banscore" : 0,
+        "syncnode" : true
+    },
+    {
+        "addr" : "192.168.1.2:22556",
+        "addrlocal" : "192.168.255.2:22556",
+        "services" : "00000003",
+        "lastsend" : 1413854162,
+        "lastrecv" : 1413854161,
+        "bytessent" : 475,
+        "bytesrecv" : 704,
+        "conntime" : 1413854159,
+        "pingtime" : 0.00000000,
+        "version" : 70003,
+        "subver" : "/Shibetoshi:1.8.0/",
+        "inbound" : false,
+        "startingheight" : 425318,
+        "banscore" : 0
+    }
+]
