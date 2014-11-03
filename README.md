@@ -1,5 +1,8 @@
 # dogecoind-api
 
+![Build Status](http://shields.sodaware.net/dogecoind-api.el/build-status.svg)
+![Test Results](http://shields.sodaware.net/dogecoind-api.el/test-results.svg)
+
 ## Description
 
 **dogecoind-api** is an Emacs library for working with the dogecoind
